@@ -12,10 +12,7 @@ type TodoContextType = {
 const TodoContext = createContext<TodoContextType>(null!);
 
 export function TodoProvider({ children }: { children: ReactNode }) {
-    const [todos, setTodos] = useState<Todo[]>([
-        { id: "1a", description: "Comprar pão", completed: false },
-        { id: "1b", description: "Arrumar a casa", completed: false },
-    ]);
+    const [todos, setTodos] = useState<Todo[]>([]);
 
     function addTodo(description: string) {
         const newTodo: Todo = {

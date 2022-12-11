@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Alert, View } from "react-native";
+import { Alert, Text, View } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import { useTodo } from "../../context/TodoContext";
+import { styles } from "./styles";
 
 export function TodoForm() {
     const [description, setDescription] = useState("");
@@ -18,9 +19,10 @@ export function TodoForm() {
     }
 
     return (
-        <View>
-            <TextInput mode="outlined" value={description} onChangeText={setDescription} />
-            <Button icon="plus" onPress={handleAddTodo} mode="outlined">Adicionar</Button>
+        <View style={styles.container}>
+            <Text style={styles.title}>Nova tarefa</Text>
+            <TextInput placeholder="nova tarefa" mode="outlined" value={description} onChangeText={setDescription} />
+            <Button style={styles.button} icon="plus" onPress={handleAddTodo} mode="outlined">Adicionar</Button>
         </View>
     );
 }

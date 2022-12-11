@@ -4,41 +4,44 @@ import { useEffect, useRef, useState } from "react";
 import { styles } from "./styles";
 
 type Props = {
-    onCheck: (newValue: boolean) => void;
+    onCheck: VoidFunction;
     value: boolean
 }
 
 export function Checkbox({ onCheck, value }: Props) {
     const animation = useRef<any>(null!);
-    const [checked, setChecked] = useState(value);
     const firstRun = useRef(true);
 
     useEffect(() => {
-        if (!firstRun.current) {
-            if (checked) {
-                animation.current.play(0, 30);
+        if (firstRun.current) {
+            if (!value) {
+                animation.current.play(0, 0);
             } else {
-                animation.current.play(30, 0);
+                animation.current.play(20, 20);
             }
         } else {
-            if (checked) {
-                animation.current.play(30, 30);
-                firstRun.current = false;
+            if (!value) {
+                animation.current.play(20, 0);
+            } else {
+                animation.current.play(0, 20);
             }
         }
-    
-        onCheck(!checked);
-    }, [checked]);
+    }, [value]);
+
+    function handleCheck() {
+        firstRun.current = false;
+        onCheck();
+    }
 
     return (
-        <TouchableOpacity style={styles.checkbox} onPress={() => setChecked(!checked)}>
+        <TouchableOpacity style={styles.checkbox} onPress={handleCheck}>
             <Lottie
                 source={require("../../assets/checkbox.json")}
                 autoPlay={false}
                 loop={false}
                 resizeMode="cover"
                 ref={animation}
-                style={{ height: 200, width: 200 }}
+                style={{ height: 64, width: 64 }}
             />
         </TouchableOpacity>
     );
